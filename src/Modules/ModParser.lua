@@ -2074,8 +2074,14 @@ local function flag(name, ...)
 	return mod(name, "FLAG", true, ...)
 end
 
+local gems = {}
+for id in pairs(data.gems) do
+    table.insert(gems, id)
+end
+table.sort(gems)
 local gemIdLookup = { }
-for gemId, gemData in pairs(data.gems) do
+for _, gem in ipairs(gems) do
+	local gemData = data.gems[gem]
 	local grantedEffect = gemData.grantedEffect
 	local gemName = (grantedEffect.fromItem or grantedEffect.fromTree) and grantedEffect.baseTypeName and grantedEffect.baseTypeName:lower() or gemData.name:lower()
 	gemIdLookup[gemName] = grantedEffect.id
@@ -3946,7 +3952,7 @@ local specialModList = {
 		mod("Damage", "INC", num, nil, 0, KeywordFlag.Poison, { type = "Condition", var = "SinglePoison" }, { type = "SkillName", skillNameList = { "Sunder", "Ground Slam" }, includeTransfigured = true })
 	} end,
 	["poisons on you expire (%d+)%% slower"] = function(num) return { mod("SelfPoisonDebuffExpirationRate", "BASE", -num) } end,
-	["any number of poisons from this weapon can affect a target at the same time"] = { -- Splinter of Loratta
+	["any number of poisons from this weapon can affect a target at the same time"] = { -- Splinter of Lorrata
 		flag("PoisonCanStack"),
 		mod("PoisonStacks", "OVERRIDE", math.huge , { type = "Condition", var = "{Hand}Attack" }, { type = "SkillType", skillType = SkillType.NonWeaponAttack, neg = true })
 	},

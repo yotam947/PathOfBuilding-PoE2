@@ -47,6 +47,7 @@ local weaponClassMap = {
 	["Unarmed"] = "None",
 	["Flail"] = "Flail",
 	["Spear"] = "Spear",
+	["Talisman"] = "Talisman",
 }
 
 local gems = { }
@@ -490,6 +491,16 @@ directiveTable.set = function(state, args, out)
 		grantedEffectStatSet.ImplicitStats = tableConcat(skill.baseGrantedEffectStatSet.ImplicitStats, grantedEffectStatSet.ImplicitStats)
 		grantedEffectStatSet.ConstantStats = tableConcat(skill.baseGrantedEffectStatSet.ConstantStats, grantedEffectStatSet.ConstantStats)
 		grantedEffectStatSet.ConstantStatsValues = tableConcat(skill.baseGrantedEffectStatSet.ConstantStatsValues, grantedEffectStatSet.ConstantStatsValues)
+		
+		if grantedEffectStatSet.BaseEffectiveness == 1 then
+			grantedEffectStatSet.BaseEffectiveness = skill.baseGrantedEffectStatSet.BaseEffectiveness 
+		end
+		if grantedEffectStatSet.IncrementalEffectiveness == 0 then
+			grantedEffectStatSet.IncrementalEffectiveness = skill.baseGrantedEffectStatSet.IncrementalEffectiveness 
+		end
+		if grantedEffectStatSet.DamageIncrementalEffectiveness == 0 then
+			grantedEffectStatSet.DamageIncrementalEffectiveness = skill.baseGrantedEffectStatSet.DamageIncrementalEffectiveness 
+		end
 	end
 	
 	local statMap = { }
